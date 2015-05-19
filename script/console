@@ -1,0 +1,6 @@
+#!/bin/sh
+# Usage: script/server
+# Start developer console
+set -e
+
+bundle exec pry scripts/_console.rb
