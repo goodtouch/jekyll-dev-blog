@@ -4,7 +4,7 @@ layout: default
 
 <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+  <h1 class="page-heading">Posts (order: date DESC, slug)</h1>
 
   <ul class="post-list">
     {% for post in site.posts %}
@@ -17,6 +17,41 @@ layout: default
       </li>
     {% endfor %}
   </ul>
+
+
+  {% for collection in site.collections %}
+    <h1 class="page-heading">Collection: {{ collection.label }} (order: {{ collection.order }})</h1>
+
+    {% for post in collection.docs %}
+      <li>
+        {% if collection.label == 'my_time_start_sorted_collection' %}
+          <span class="post-meta">Start time: {{ post.time.start | date: "%b %-d, %Y" }}</span>
+        {% endif %}
+        {% if collection.label != 'my_time_start_sorted_collection' %}
+          <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        {% endif %}
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+
+  {% endfor %}
+
+  <h1 class="page-heading">
+    Jekyll order filter with my_time_start_sorted_collection (order: time.start DESC)<br>
+    <small>(I know it doesn't make much to sort by 'time.start DESC' but as the collection should already be sorted
+    by 'time.start ASC', it's a good way to test that the order filter does work :-p)</small></h1>
+
+  {% assign events = site.my_time_start_sorted_collection | order: 'time.start DESC' %}
+  {% for post in events %}
+    <li>
+      <span class="post-meta">Start time: {{ post.time.start | date: "%b %-d, %Y" }}</span>
+      <h2>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </h2>
+    </li>
+  {% endfor %}
 
   <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 

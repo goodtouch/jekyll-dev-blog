@@ -15,3 +15,14 @@ github_username:  jekyll
 
 # Build settings
 markdown: kramdown
+
+# Collections
+collections:
+  my_collection:
+    output: true
+  my_date_sorted_collection:
+    output: true
+    order: date DESC, slug
+  my_time_start_sorted_collection:
+    output: true
+    order: time.start, slug
