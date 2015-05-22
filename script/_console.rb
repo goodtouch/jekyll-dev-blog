@@ -17,6 +17,10 @@ def root_dir(*subdirs)
   File.join(ROOT_DIR, *subdirs)
 end
 
+def config_file
+  root_dir('_config.yml')
+end
+
 def fixture_site(overrides = {})
   Jekyll::Site.new(site_configuration(overrides))
 end
@@ -28,7 +32,8 @@ end
 def site_configuration(overrides = {})
   build_configs({
     "source"      => source_dir,
-    "destination" => dest_dir
+    "destination" => dest_dir,
+    "config"      => config_file,
   })
 end
 
