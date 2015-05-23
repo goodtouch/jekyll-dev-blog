@@ -15,3 +15,13 @@ github_username:  jekyll
 
 # Build settings
 markdown: kramdown
+
+collections:
+  screencasts:
+    output: true
+    classifications:
+      - categories
+      - framework_versions
+      - tags
+      - seasons
+      - episodes

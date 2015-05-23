@@ -4,20 +4,58 @@ layout: default
 
 <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+  <h1 class="page-heading">Rails Screencasts listing</h1>
 
   <ul class="post-list">
-    {% for post in site.posts %}
+    {% for screencast in site.screencasts.categories.rails %}
       <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
+        <span class="post-meta">{{ screencast.date | date: "%b %-d, %Y" }}</span>
+        <a class="post-link" href="{{ screencast.url | prepend: site.baseurl }}">{{ screencast.title }}</a>
       </li>
     {% endfor %}
   </ul>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  <h1 class="page-heading">Screencasts by Tags</h1>
+
+  <ul>
+    {% for tag in site.screencasts.tags %}
+      <li>
+        <span>{{ tag }}</span>
+        <ul class="post-list">
+          {% for screencast in site.screencasts.tags[tag] %}
+            <li>
+              <span class="post-meta">{{ screencast.date | date: "%b %-d, %Y" }}</span>
+              <a class="post-link" href="{{ screencast.url | prepend: site.baseurl }}">{{ screencast.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h1 class="page-heading">List Screencasts by</h1>
+
+  <ul>
+    {% for classification in site.collections.screencasts.classifications %}
+      <li>
+        <span class="classification">{{ classification.label }}</span>
+        <ul>
+          {% for index in site.collections.screencasts.classifications[classification.label].indexes %}
+            <li>
+              <span>{{ index.label }}</span>
+              <ul class="post-list">
+                {% for screencast in site.collections.screencasts.classifications[classification.label].indexes[index.label].docs %}
+                  <li>
+                    <span class="post-meta">{{ screencast.date | date: "%b %-d, %Y" }}</span>
+                    <a class="post-link" href="{{ screencast.url | prepend: site.baseurl }}">{{ screencast.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
 
 </div>
